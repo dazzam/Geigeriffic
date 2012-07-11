@@ -538,17 +538,17 @@ LOAD /usr/local/CrossPack-AVR-20120217/lib/gcc/avr/4.5.1/avr25/libgcc.a
  .debug_abbrev  0x0000092c      0x14b /usr/local/CrossPack-AVR-20120217/lib/gcc/avr/4.5.1/avr25/libgcc.a(_unpack_sf.o)
  .debug_abbrev  0x00000a77      0x10b /usr/local/CrossPack-AVR-20120217/lib/gcc/avr/4.5.1/avr25/libgcc.a(_fpcmp_parts_sf.o)
 
-.debug_line     0x00000000      0xfd8
+.debug_line     0x00000000      0xfd9
  *(.debug_line)
- .debug_line    0x00000000      0x5a8 geiger.o
- .debug_line    0x000005a8       0x9d /usr/local/CrossPack-AVR-20120217/lib/gcc/avr/4.5.1/avr25/libgcc.a(_fixunssfsi.o)
- .debug_line    0x00000645      0x2c2 /usr/local/CrossPack-AVR-20120217/lib/gcc/avr/4.5.1/avr25/libgcc.a(_addsub_sf.o)
- .debug_line    0x00000907       0xd9 /usr/local/CrossPack-AVR-20120217/lib/gcc/avr/4.5.1/avr25/libgcc.a(_ge_sf.o)
- .debug_line    0x000009e0      0x113 /usr/local/CrossPack-AVR-20120217/lib/gcc/avr/4.5.1/avr25/libgcc.a(_sf_to_si.o)
- .debug_line    0x00000af3       0x86 /usr/local/CrossPack-AVR-20120217/lib/gcc/avr/4.5.1/avr25/libgcc.a(_thenan_sf.o)
- .debug_line    0x00000b79      0x1c9 /usr/local/CrossPack-AVR-20120217/lib/gcc/avr/4.5.1/avr25/libgcc.a(_pack_sf.o)
- .debug_line    0x00000d42      0x149 /usr/local/CrossPack-AVR-20120217/lib/gcc/avr/4.5.1/avr25/libgcc.a(_unpack_sf.o)
- .debug_line    0x00000e8b      0x14d /usr/local/CrossPack-AVR-20120217/lib/gcc/avr/4.5.1/avr25/libgcc.a(_fpcmp_parts_sf.o)
+ .debug_line    0x00000000      0x5a9 geiger.o
+ .debug_line    0x000005a9       0x9d /usr/local/CrossPack-AVR-20120217/lib/gcc/avr/4.5.1/avr25/libgcc.a(_fixunssfsi.o)
+ .debug_line    0x00000646      0x2c2 /usr/local/CrossPack-AVR-20120217/lib/gcc/avr/4.5.1/avr25/libgcc.a(_addsub_sf.o)
+ .debug_line    0x00000908       0xd9 /usr/local/CrossPack-AVR-20120217/lib/gcc/avr/4.5.1/avr25/libgcc.a(_ge_sf.o)
+ .debug_line    0x000009e1      0x113 /usr/local/CrossPack-AVR-20120217/lib/gcc/avr/4.5.1/avr25/libgcc.a(_sf_to_si.o)
+ .debug_line    0x00000af4       0x86 /usr/local/CrossPack-AVR-20120217/lib/gcc/avr/4.5.1/avr25/libgcc.a(_thenan_sf.o)
+ .debug_line    0x00000b7a      0x1c9 /usr/local/CrossPack-AVR-20120217/lib/gcc/avr/4.5.1/avr25/libgcc.a(_pack_sf.o)
+ .debug_line    0x00000d43      0x149 /usr/local/CrossPack-AVR-20120217/lib/gcc/avr/4.5.1/avr25/libgcc.a(_unpack_sf.o)
+ .debug_line    0x00000e8c      0x14d /usr/local/CrossPack-AVR-20120217/lib/gcc/avr/4.5.1/avr25/libgcc.a(_fpcmp_parts_sf.o)
 
 .debug_frame    0x00000000      0x1a0
  *(.debug_frame)

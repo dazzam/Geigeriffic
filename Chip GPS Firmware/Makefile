@@ -16,11 +16,12 @@
 # PROGRAMMER	Programmer hardware used to flash program to target device.
 # PORT			The peripheral port on the host PC that the programmer is connected to.	
 # LFUSE			Target device configuration fuses, low byte.
-# HFUSE			Targer device configuration fuses, high byte.
+# HFUSE			Target device configuration fuses, high byte.
 # EFUSE			Target device configuration fuses (extended).
 
 PROGRAM		= geiger
 OBJECTS		= geiger.o
+DEPS		= nmea/nmea.h
 DEVICE		= attiny2313
 CLOCK		= 8000000
 PROGRAMMER	= avrispmkii
@@ -41,7 +42,7 @@ AVRDUDE = avrdude -c $(PROGRAMMER) -P $(PORT) -p $(DEVICE)
 COMPILE = avr-gcc -g -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
 
 # Linker options
-LDFLAGS	= -Wl,-Map=$(PROGRAM).map -Wl,--cref 
+LDFLAGS	= -Wl,-Map=$(PROGRAM).map -Wl,--cref -Inmea
 
 # Add size command so we can see how much space we are using on the target device.
 SIZE	= avr-size -C --mcu=$(DEVICE)
@@ -71,7 +72,7 @@ clean:
 %.elf: %.o
 	$(COMPILE) -o $@ $< $(LDFLAGS)
 
-%.o: %.c
+%.o: %.c $(DEPS)
 	$(COMPILE) -c $< -o $@
 
 # Targets for code debugging and analysis:

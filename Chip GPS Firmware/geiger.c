@@ -65,8 +65,22 @@
 #include <avr/sleep.h>		// sleep mode utilities
 #include <util/delay.h>		// some convenient delay functions
 #include <stdlib.h>			// some handy functions like utoa()
-#include "nmea/nmea.h"      //Nmea Decoding functions
-#include <stdio.h>          //More NMEa decoding functions
+#include "nmea/nmea.h"     //Nmea Decoding functions
+/*
+#include "nmea/config.h"      //Nmea Decoding functions
+#include "nmea/context.h"      //Nmea Decoding functions
+#include "nmea/generate.h"      //Nmea Decoding functions
+#include "nmea/generator.h"      //Nmea Decoding functions
+#include "nmea/gmath.h"      //Nmea Decoding functions
+#include "nmea/info.h"      //Nmea Decoding functions
+#include "nmea/parse.h"      //Nmea Decoding functions
+#include "nmea/parser.h"      //Nmea Decoding functions
+#include "nmea/sentence.h"      //Nmea Decoding functions
+#include "nmea/time.h"      //Nmea Decoding functions
+#include "nmea/tok.h"      //Nmea Decoding functions
+#include "nmea/units.h"      //Nmea Decoding functions
+ */
+#include <stdio.h>          //More Nmea decoding functions
 #include <string.h>         //Used for strings
 
 // Defines
