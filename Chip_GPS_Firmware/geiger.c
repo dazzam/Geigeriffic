@@ -65,8 +65,8 @@
 #include <avr/sleep.h>		// sleep mode utilities
 #include <util/delay.h>		// some convenient delay functions
 #include <stdlib.h>			// some handy functions like utoa()
-#include <stdio.h>          //More Nmea decoding functions
-#include <string.h>         //Used for strings
+//#include <stdio.h>          //More Nmea decoding functions
+//#include <string.h>         //Used for strings
 
 // Defines
 #define VERSION			"1.00"
@@ -289,15 +289,11 @@ void sendreport(void)
 		}			
 			
         //Insert GPS information
-char sampleInfo[100]="$GPGGA,123519,4807.038,N,01131.000,E,1,08,0.9,545.4,M,46.9,M,,*47";
 
-
-         uart_putstring_P(PSTR(", Lon: "));
-		 char blah=sampleInfo[6];
-		 //utoa(blah, serbuf, 10);		// radix 10
-    	 //  	uart_putstring_P(blah);
-         uart_putchar(blah);
-         
+//char sampleInfo[75]="$GPGGA,123519,4807.038,N,01131.000,E,1,08,0.9,545.4,M,46.9,M,,*47";
+ char sampleInfo[20]="4916.45, N, 12311.12, W, 225444, A";
+         uart_putstring_P(PSTR(", GPS, "));
+		 uart_putstring(sampleInfo);
         
 		// We're done reporting data, output a newline.
 		uart_putchar('\n');	
