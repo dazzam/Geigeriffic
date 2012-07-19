@@ -15,7 +15,9 @@ geiger.o: ../geiger.c \
   c:/winavr-20100110/lib/gcc/../../avr/include/avr/sleep.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h \
-  c:/winavr-20100110/lib/gcc/../../avr/include/stdlib.h
+  c:/winavr-20100110/lib/gcc/../../avr/include/stdlib.h \
+  c:/winavr-20100110/lib/gcc/../../avr/include/stdio.h \
+  c:\winavr-20100110\bin\../lib/gcc/avr/4.3.3/include/stdarg.h
 
 c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:
 
@@ -50,3 +52,7 @@ c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h:
 c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h:
 
 c:/winavr-20100110/lib/gcc/../../avr/include/stdlib.h:
+
+c:/winavr-20100110/lib/gcc/../../avr/include/stdio.h:
+
+c:\winavr-20100110\bin\../lib/gcc/avr/4.3.3/include/stdarg.h:
