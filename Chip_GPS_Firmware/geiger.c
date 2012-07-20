@@ -65,15 +65,12 @@
 #include <avr/sleep.h>		// sleep mode utilities
 #include <util/delay.h>		// some convenient delay functions
 #include <stdlib.h>			// some handy functions like utoa()
-#include <stdio.h>          //More Nmea decoding functions
-//#include <string.h>         //Used for strings
 
 // Defines
 #define VERSION			"1.00"
 #define URL				"http://mightyohm.com/geiger"
-#define GPSSIGNAL		"$PMTK314,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29"
 
-//#defne	F_CPU			8000000	// AVR clock speed in Hz
+#define	F_CPU			8000000	// AVR clock speed in Hz
 #define	BAUD			9600	// Serial BAUD rate
 #define SER_BUFF_LEN	11		// Serial buffer length
 #define THRESHOLD		1000	// CPM threshold for fast avg mode
@@ -103,12 +100,11 @@ volatile uint8_t idx;					// sample buffer index
 
 volatile uint8_t eventflag;	// flag for ISR to tell main loop if a GM event has occurred
 volatile uint8_t tick;		// flag that tells main() when 1 second has passed
+volatile uint8_t threetick=0;
 
 char serbuf[SER_BUFF_LEN];	// serial buffer
-uint8_t mode;				// logging mode, 0 = slow, 1 = fast, 2 = inst;
-char sampleInfo[60];
+uint8_t mode;				// logging mode, 0 = slow, 1 = fast, 2 = inst
 
-//*************************************************************
 
 // Interrupt service routines
 
@@ -151,6 +147,7 @@ ISR(TIMER1_COMPA_vect)
 {
 	uint8_t i;	// index for fast mode
 	tick = 1;	// update flag
+	threetick++;
 	
 	//PORTB ^= _BV(PB4);	// toggle the LED (for debugging purposes)
 	cps = count;
@@ -237,8 +234,8 @@ void checkevent(void)
 void sendreport(void)
 {
 	uint32_t cpm;	// This is the CPM value we will report
-	if(tick) {	// 1 second has passed, time to report data via UART
-		tick = 0;	// reset flag for the next interval
+	if(threetick==3) {	// 1 second has passed, time to report data via UART
+		threetick = 0;	// reset flag for the next interval
 			
 		if (overflow) {
 			cpm = cps*60UL;
@@ -247,63 +244,49 @@ void sendreport(void)
 		}				
 		else if (fastcpm > THRESHOLD) {	// if cpm is too high, use the short term average instead
 			mode = 1;
-			cpm = fastcpm;	// report cpmf based on last 5 samples
+			cpm = fastcpm;	// report cpm based on last 5 samples
 		} else {
 			mode = 0;
 			cpm = slowcpm;	// report cpm based on last 60 samples
 		}
 		
 		// Send CPM value to the serial port
-	//	uart_putstring_P(PSTR("CPS, "));
-	//	utoa(cps, serbuf, 10);		// radix 10
-	//	uart_putstring(serbuf);
+		uart_putstring_P(PSTR("CPS, "));
+		utoa(cps, serbuf, 10);		// radix 10
+		uart_putstring(serbuf);
 			
-	//	uart_putstring_P(PSTR(", CPM, "));
-	//	ultoa(cpm, serbuf, 10);		// radix 10
-	//	uart_putstring(serbuf);
+		uart_putstring_P(PSTR(", CPM, "));
+		ultoa(cpm, serbuf, 10);		// radix 10
+		uart_putstring(serbuf);
 			
-	//	uart_putstring_P(PSTR(", uSv/hr, "));
+		uart_putstring_P(PSTR(", uSv/hr, "));
 	
 		// calculate uSv/hr based on scaling factor, and multiply result by 100
 		// so we can easily separate the integer and fractional components (2 decimal places)
 		uint32_t usv_scaled = (uint32_t)(cpm*SCALE_FACTOR);	// scale and truncate the integer part
 			
 		// this reports the integer part
-	//	utoa((uint16_t)(usv_scaled/10000), serbuf, 10);	
-	//	uart_putstring(serbuf);
+		utoa((uint16_t)(usv_scaled/10000), serbuf, 10);	
+		uart_putstring(serbuf);
 			
-	//	uart_putchar('.');
+		uart_putchar('.');
 			
 		// this reports the fractional part (2 decimal places)
 		uint8_t fraction = (usv_scaled/100)%100;
 		if (fraction < 10)
 			uart_putchar('0');	// zero padding for <0.10
-	//	utoa(fraction, serbuf, 10);
-	//	uart_putstring(serbuf);
+		utoa(fraction, serbuf, 10);
+		uart_putstring(serbuf);
 			
 		// Tell us what averaging method is being used
 		if (mode == 2) {
-	//		uart_putstring_P(PSTR(", INST, "));
+			uart_putstring_P(PSTR(", INST"));
 		} else if (mode == 1) {
-	//		uart_putstring_P(PSTR(", FAST, "));
+			uart_putstring_P(PSTR(", FAST"));
 		} else {
-	//		uart_putstring_P(PSTR(", SLOW, "));
+			uart_putstring_P(PSTR(", SLOW"));
 		}			
-		
-        //Insert GPS information
-
-//char sampleInfo[75]="$GPGGA,123519,4807.038,N,01131.000,E,1,08,0.9,545.4,M,46.9,M,,*47";
-//char sampleInfo[35]="4916.d45, N, 12311.12, W, 225444, A";
- //char sampleInfo[10]="1234567890";
-// char sampleInfo2[1]="0";
-fgets(sampleInfo, 60, PD0);
-//		utoa(sampleInfo, serbuf, 10);		// radix 10
-//		memset(sampleInfo, 0, sizeof(sampleInfo));
-
-
-//		 uart_putstring(serbuf);
-		 uart_putstring(sampleInfo);
-        
+			
 		// We're done reporting data, output a newline.
 		uart_putchar('\n');	
 	}	
@@ -322,7 +305,6 @@ int main(void)
 
 	uart_putstring_P(PSTR("mightyohm.com Geiger Counter " VERSION "\n"));
 	uart_putstring_P(PSTR(URL "\n"));
-	uart_putstring_P(PSTR(GPSSIGNAL "\n"));
 
 	// Set up AVR IO ports
 	DDRB = _BV(PB4) | _BV(PB2);  // set pins connected to LED and piezo as outputs
