@@ -77,7 +77,7 @@
 #define LONG_PERIOD		60		// # of samples to keep in memory in slow avg mode
 #define SHORT_PERIOD	5		// # or samples for fast avg mode
 #define SCALE_FACTOR	57		//	CPM to uSv/hr conversion factor (x10,000 to avoid float)
-#define PULSEWIDTH		100		// width of the PULSE output (in microseconds)
+#define PULSEWIDTH		1000		// width of the PULSE output (in milliseconds)
 
 // Function prototypes
 void uart_putchar(char c);			// send a character to the serial port
@@ -118,9 +118,9 @@ ISR(INT0_vect)
 	// send a pulse to the PULSE connector
 	// a delay of 100us limits the max CPS to about 8000
 	// you can comment out this code and increase the max CPS possible (up to 65535!)
-	PORTD |= _BV(PD6);	// set PULSE output high
-	_delay_us(PULSEWIDTH);
-	PORTD &= ~(_BV(PD6));	// set pulse output low
+//	PORTD |= _BV(PD6);	// set PULSE output high
+//	_delay_us(PULSEWIDTH);
+//	PORTD &= ~(_BV(PD6));	// set pulse output low
 		
 	eventflag = 1;	// tell main program loop that a GM pulse has occurred
 }
@@ -236,7 +236,8 @@ void sendreport(void)
 	uint32_t cpm;	// This is the CPM value we will report
 	if(threetick==3) {	// 1 second has passed, time to report data via UART
 		threetick = 0;	// reset flag for the next interval
-			
+		PORTD &= ~(_BV(PD6));	// set pulse output low	
+		_delay_ms(PULSEWIDTH);
 		if (overflow) {
 			cpm = cps*60UL;
 			mode = 2;
@@ -288,7 +289,9 @@ void sendreport(void)
 		}			
 			
 		// We're done reporting data, output a newline.
-		uart_putchar('\n');	
+		uart_putchar('\n');
+	_delay_ms(PULSEWIDTH);
+	PORTD |= _BV(PD6);	// set PULSE output high
 	}	
 }
 

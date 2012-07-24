@@ -144,7 +144,7 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x5fc
+.text           0x00000000      0x618
  *(.vectors)
  .vectors       0x00000000       0x26 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25/crttn2313.o
                 0x00000000                __vectors
@@ -215,51 +215,51 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a
                 0x000000b0                __vector_10
                 0x000000b0                __vector_16
                 0x000000b0                __vector_18
- .text          0x000000b2      0x3f6 geiger.o
+ .text          0x000000b2      0x412 geiger.o
                 0x000000b2                __vector_1
-                0x000002c2                checkevent
-                0x000002fc                sendreport
-                0x000002a2                uart_putstring_P
-                0x0000044a                main
-                0x0000013e                __vector_4
-                0x0000028a                uart_putstring
-                0x00000104                __vector_2
-                0x00000274                uart_putchar
- .text          0x000004a8        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_mulhi3.o)
- .text          0x000004a8        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_mulsi3.o)
- .text          0x000004a8        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodsi4.o)
- .text          0x000004a8        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_exit.o)
- .text          0x000004a8        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_clear_bss.o)
- .text          0x000004a8        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25\libc.a(ultoa.o)
- .text          0x000004a8        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25\libc.a(utoa.o)
- .text          0x000004a8        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25\libc.a(strrev.o)
- .text          0x000004a8        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodhi4.o)
-                0x000004a8                . = ALIGN (0x2)
+                0x000002b6                checkevent
+                0x000002f0                sendreport
+                0x00000296                uart_putstring_P
+                0x00000466                main
+                0x00000132                __vector_4
+                0x0000027e                uart_putstring
+                0x000000f8                __vector_2
+                0x00000268                uart_putchar
+ .text          0x000004c4        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_mulhi3.o)
+ .text          0x000004c4        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_mulsi3.o)
+ .text          0x000004c4        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodsi4.o)
+ .text          0x000004c4        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_exit.o)
+ .text          0x000004c4        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_clear_bss.o)
+ .text          0x000004c4        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25\libc.a(ultoa.o)
+ .text          0x000004c4        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25\libc.a(utoa.o)
+ .text          0x000004c4        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25\libc.a(strrev.o)
+ .text          0x000004c4        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodhi4.o)
+                0x000004c4                . = ALIGN (0x2)
  *(.text.*)
- .text.libgcc   0x000004a8       0x24 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_mulhi3.o)
-                0x000004a8                __mulhi3
- .text.libgcc   0x000004cc       0x32 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_mulsi3.o)
-                0x000004cc                __mulsi3
- .text.libgcc   0x000004fe       0x44 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodsi4.o)
-                0x000004fe                __udivmodsi4
- .text.libgcc   0x00000542        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_exit.o)
- .text.libgcc   0x00000542        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_clear_bss.o)
+ .text.libgcc   0x000004c4       0x24 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_mulhi3.o)
+                0x000004c4                __mulhi3
+ .text.libgcc   0x000004e8       0x32 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_mulsi3.o)
+                0x000004e8                __mulsi3
+ .text.libgcc   0x0000051a       0x44 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodsi4.o)
+                0x0000051a                __udivmodsi4
+ .text.libgcc   0x0000055e        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_exit.o)
+ .text.libgcc   0x0000055e        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_clear_bss.o)
  .text.avr-libc
-                0x00000542       0x46 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25\libc.a(ultoa.o)
-                0x00000542                ultoa
+                0x0000055e       0x46 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25\libc.a(ultoa.o)
+                0x0000055e                ultoa
  .text.avr-libc
-                0x00000588       0x28 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25\libc.a(utoa.o)
-                0x00000588                utoa
+                0x000005a4       0x28 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25\libc.a(utoa.o)
+                0x000005a4                utoa
  .text.avr-libc
-                0x000005b0       0x20 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25\libc.a(strrev.o)
-                0x000005b0                strrev
- .text.libgcc   0x000005d0       0x28 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodhi4.o)
-                0x000005d0                __udivmodhi4
-                0x000005f8                . = ALIGN (0x2)
+                0x000005cc       0x20 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25\libc.a(strrev.o)
+                0x000005cc                strrev
+ .text.libgcc   0x000005ec       0x28 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_udivmodhi4.o)
+                0x000005ec                __udivmodhi4
+                0x00000614                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000005f8        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_exit.o)
-                0x000005f8                exit
-                0x000005f8                _exit
+ .fini9         0x00000614        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_exit.o)
+                0x00000614                exit
+                0x00000614                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -278,11 +278,11 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000005f8        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_exit.o)
+ .fini0         0x00000614        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a(_exit.o)
  *(.fini0)
-                0x000005fc                _etext = .
+                0x00000618                _etext = .
 
-.data           0x00800060        0x0 load address 0x000005fc
+.data           0x00800060        0x0 load address 0x00000618
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800060        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr25/crttn2313.o
@@ -335,8 +335,8 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a
                 0x008000b2                slowcpm
                 0x008000b4                cps
                 0x008000b6                PROVIDE (__bss_end, .)
-                0x000005fc                __data_load_start = LOADADDR (.data)
-                0x000005fc                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00000618                __data_load_start = LOADADDR (.data)
+                0x00000618                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x008000b6        0x0
                 0x008000b6                PROVIDE (__noinit_start, .)
@@ -405,31 +405,31 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr25\libgcc.a
  .debug_pubnames
                 0x00000000      0x12d geiger.o
 
-.debug_info     0x00000000      0x5e1
+.debug_info     0x00000000      0x5c4
  *(.debug_info)
- .debug_info    0x00000000      0x5e1 geiger.o
+ .debug_info    0x00000000      0x5c4 geiger.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000      0x1a7
+.debug_abbrev   0x00000000      0x1eb
  *(.debug_abbrev)
- .debug_abbrev  0x00000000      0x1a7 geiger.o
+ .debug_abbrev  0x00000000      0x1eb geiger.o
 
-.debug_line     0x00000000      0x4b9
+.debug_line     0x00000000      0x4ed
  *(.debug_line)
- .debug_line    0x00000000      0x4b9 geiger.o
+ .debug_line    0x00000000      0x4ed geiger.o
 
 .debug_frame    0x00000000       0xa0
  *(.debug_frame)
  .debug_frame   0x00000000       0xa0 geiger.o
 
-.debug_str      0x00000000      0x1f6
+.debug_str      0x00000000      0x1d9
  *(.debug_str)
- .debug_str     0x00000000      0x1f6 geiger.o
-                                0x241 (size before relaxing)
+ .debug_str     0x00000000      0x1d9 geiger.o
+                                0x224 (size before relaxing)
 
-.debug_loc      0x00000000      0x1ad
+.debug_loc      0x00000000      0x1d5
  *(.debug_loc)
- .debug_loc     0x00000000      0x1ad geiger.o
+ .debug_loc     0x00000000      0x1d5 geiger.o
 
 .debug_macinfo
  *(.debug_macinfo)
