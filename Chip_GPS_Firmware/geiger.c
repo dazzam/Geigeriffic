@@ -148,7 +148,7 @@ ISR(TIMER1_COMPA_vect)
 	uint8_t i;	// index for fast mode
 	tick = 1;	// update flag
 	threetick++;
-	
+//	uart_putchar(threetick);
 	//PORTB ^= _BV(PB4);	// toggle the LED (for debugging purposes)
 	cps = count;
 	slowcpm -= buffer[idx];		// subtract oldest sample in sample buffer
@@ -234,10 +234,16 @@ void checkevent(void)
 void sendreport(void)
 {
 	uint32_t cpm;	// This is the CPM value we will report
-	if(threetick==3) {	// 1 second has passed, time to report data via UART
-		threetick = 0;	// reset flag for the next interval
+	if(threetick>=3) {	// 3 seconds have passed, time to report data via UART
+	//	threetick = 0;	// reset flag for the next interval
+
+		if(threetick==3)
+		{
 		PORTD &= ~(_BV(PD6));	// set pulse output low	
-		_delay_ms(PULSEWIDTH);
+	//	_delay_ms(PULSEWIDTH);
+		}
+else if(threetick==4)
+{
 		if (overflow) {
 			cpm = cps*60UL;
 			mode = 2;
@@ -290,8 +296,13 @@ void sendreport(void)
 			
 		// We're done reporting data, output a newline.
 		uart_putchar('\n');
-	_delay_ms(PULSEWIDTH);
+		}
+		else if(threetick==5)
+		{
+//	_delay_ms(PULSEWIDTH);
 	PORTD |= _BV(PD6);	// set PULSE output high
+	threetick=0;
+		}
 	}	
 }
 

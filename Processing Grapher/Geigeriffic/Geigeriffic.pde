@@ -26,7 +26,7 @@ void setup()
   size(screen.width, screen.height);
   println(Serial.list());
   port=new Serial(this, "/dev/tty.usbserial-A1011FUU", 9600);//What is Port?
-
+  port.write("$PMTK314,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29");
   delay(500);
 
   //Wait until recieve first message
@@ -102,11 +102,18 @@ void draw()
 
 void serialEvent(Serial port)
 {
+ port.write("$PMTK314,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29");
   if (!firstContact)//Ignore first contact, information incorrect
   {
     data = port.readStringUntil('\n');
     data = data.substring(0, data.length() - 1);
     println(data);
+    if(data.charAt(0)=='$')
+    {
+     println("Hello"); 
+    }
+    else if (data.charAt(0)=='C')
+    {
     //Grab the Actual values from this data string
     String[] values = splitTokens(data, ", ");
     println(values);
@@ -116,6 +123,7 @@ void serialEvent(Serial port)
     uSvString=values[5];
     uSvInt=int(values[5]);
     mode=values[6];
+    }
     if (writeData)
     {
       String[] csvData= {
