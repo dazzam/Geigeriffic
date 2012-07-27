@@ -9,7 +9,7 @@ float[] cpsArray=new float[1150];
 float[] cpmArray=new float[1150];
 float[] uSvArray=new float[1150];
 
-String filePath = "/Users/Dillon/Desktop/Dropbox/Blue Stamp Engineering/Geiger Counter/Geigeriffic Logs/" + year()+"|"+month()+"|"+day()+" "+hour()+":"+minute() + ".csv"; 
+String filePath = "/Users/Dillon/Desktop/Dropbox/Blue_Stamp_Engineering/Geiger Counter/Geigeriffic Logs/" + year()+"|"+month()+"|"+day()+" "+hour()+":"+minute() + ".csv"; 
 
 String mode="";
 int cps;
@@ -43,6 +43,7 @@ void setup()
 
 void draw()
 {
+  port.write("$PMTK314,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29");
   background(255, 255, 255);
   image(img, 0, 0);
   fill(50, 50, 50);
@@ -66,7 +67,7 @@ void draw()
     line((-frameCount%20)+i*20-450, 375, (-frameCount%20)+i*20-450, height);
     line(0, i*20 +375, width-450, i*20+375);
   }
-  
+
   //uSv/hr Graph
   noFill();
   stroke(37, 87, 223);
@@ -102,27 +103,35 @@ void draw()
 
 void serialEvent(Serial port)
 {
- port.write("$PMTK314,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29");
+  port.write("$PMTK314,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29");
   if (!firstContact)//Ignore first contact, information incorrect
   {
     data = port.readStringUntil('\n');
     data = data.substring(0, data.length() - 1);
     println(data);
-    if(data.charAt(0)=='$')
+    if (data.charAt(0)=='$')
     {
-     println("Hello"); 
+      if (data.charAt(3)=='G' && data.charAt(4)=='G' && data.charAt(5)=='A') 
+      {
+      String[] values = splitTokens(data, ",");
+      println(values);
+      }
+      else
+      {
+        port.write("$PMTK314,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29");
+      }
     }
     else if (data.charAt(0)=='C')
     {
-    //Grab the Actual values from this data string
-    String[] values = splitTokens(data, ", ");
-    println(values);
-    cps=int(values[1]);
-    println(cps);
-    cpm=int(values[3]);
-    uSvString=values[5];
-    uSvInt=int(values[5]);
-    mode=values[6];
+      //Grab the Actual values from this data string
+      String[] values = splitTokens(data, ", ");
+      println(values);
+      cps=int(values[1]);
+      println(cps);
+      cpm=int(values[3]);
+      uSvString=values[5];
+      uSvInt=int(values[5]);
+      mode=values[6];
     }
     if (writeData)
     {
