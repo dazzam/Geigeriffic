@@ -16,9 +16,19 @@ int cps;
 int cpm;
 String uSvString;
 int uSvInt;
+String Satellites;
+String lat;
+float goodLat;
+String latLetter;
+String lon;
+float goodLon;
+String lonLetter;
+String altitude;
+String altLetter;
+String fix="Void";
 
 boolean firstContact=true;
-boolean writeData=true;
+boolean writeData=false;
 
 void setup()
 {
@@ -26,7 +36,7 @@ void setup()
   size(screen.width, screen.height);
   println(Serial.list());
   port=new Serial(this, "/dev/tty.usbserial-A1011FUU", 9600);//What is Port?
-  port.write("$PMTK314,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29");
+  port.write("$PMTK314,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29\r\n");
   delay(500);
 
   //Wait until recieve first message
@@ -36,14 +46,13 @@ void setup()
 
   //Write to File
   String[] csvTitle= {
-    "Date, Time, CPS, CPM, µSv/hr, Mode"
+    "Date, Time, CPS, CPM, µSv/hr, Mode, Lat, Lon, Satelites, Altitude"
   };
   appendToFile(filePath, csvTitle);
 }//End Setup
 
 void draw()
 {
-  port.write("$PMTK314,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29");
   background(255, 255, 255);
   image(img, 0, 0);
   fill(50, 50, 50);
@@ -56,8 +65,18 @@ void draw()
   text("Current CPM: "+cpm, 1300, 660);
   fill(37, 87, 223);  
   text("Current µSv/hr: "+uSvString, 1300, 700);
-  fill(238, 58, 0);  
+  fill(277, 198, 58);  
   text("Current Mode: "+mode, 1300, 740);  
+
+  if (fix=="Void")
+  {
+    fill(211, 29, 25);
+  }
+  else if (fix=="Active")
+  {
+    fill(70, 144, 46);
+  }  
+  text("GPS Fix: "+fix, 1300, 780);
 
   //Grid Lines
   for (int i = 0 ;i<=width/20;i++)
@@ -103,7 +122,6 @@ void draw()
 
 void serialEvent(Serial port)
 {
-  port.write("$PMTK314,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29");
   if (!firstContact)//Ignore first contact, information incorrect
   {
     data = port.readStringUntil('\n');
@@ -113,13 +131,53 @@ void serialEvent(Serial port)
     {
       if (data.charAt(3)=='G' && data.charAt(4)=='G' && data.charAt(5)=='A') 
       {
-      String[] values = splitTokens(data, ",");
-      println(values);
+        String[] gpsvalues = splitTokens(data, ",");
+        println(gpsvalues);
+        if (float(gpsvalues[2])==0)
+        {
+          Satellites="Void";
+          lat="Void";
+          latLetter="Void";
+          lon="Void";
+          lonLetter="Void";
+          altitude="Void";
+          altLetter="Void";
+          fix="Void";
+        }
+        else if (float(gpsvalues[6])==1)
+        {
+          Satellites=gpsvalues[7];
+          lat=gpsvalues[2];
+          if(gpsvalues[2].charAt(4)=='.')//If Degrees is 2 digits
+          {
+             goodLat=float(gpsvalues[2].substring(0, 2))+(float(gpsvalues[2].substring(2, gpsvalues[2].length()))/60);
+          }
+          else if (lat.charAt(5)=='.')//If Degrees is 3 digits
+          {
+            goodLat=float(gpsvalues[2].substring(0, 3))+(float(gpsvalues[2].substring(3, gpsvalues[2].length()))/60);
+          }
+         
+          latLetter=gpsvalues[3];
+          lon=gpsvalues[4];
+          if(gpsvalues[4].charAt(4)=='.')//If Degrees is 2 digits
+          {
+             goodLon=float(gpsvalues[4].substring(0, 2))+(float(gpsvalues[4].substring(2, gpsvalues[4].length()))/60);
+          }
+          else if (lon.charAt(5)=='.')//If Degrees is 3 digits
+          {
+            goodLon=float(gpsvalues[4].substring(0, 3))+(float(gpsvalues[4].substring(3, gpsvalues[4].length()))/60);
+          }
+          lonLetter=gpsvalues[5];
+          altitude=gpsvalues[9];
+          altLetter=gpsvalues[10];
+          fix="Active";
+        }
       }
       else
       {
-        port.write("$PMTK314,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29");
+        port.write("$PMTK314,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29\r\n");
       }
+      
     }
     else if (data.charAt(0)=='C')
     {
@@ -131,19 +189,22 @@ void serialEvent(Serial port)
       cpm=int(values[3]);
       uSvString=values[5];
       uSvInt=int(values[5]);
-      mode=values[6];
-    }
-    if (writeData)
-    {
-      String[] csvData= {
-        month()+"/"+day()+"/"+year()+","+hour()+":"+minute()+":"+second()+","+cps+","+cpm+","+uSvString+","+mode
-      };
-      appendToFile(filePath, csvData);
+      mode = values[6].substring(0, values[6].length() - 1);
+      if (writeData)
+      {
+        String[] csvData= {
+month()+"/"+day()+"/"+year()+","+hour()+":"+minute()+":"+second()+","+cps+","+cpm+","+uSvString+","+mode+","+goodLat+" "+latLetter+","+goodLon+" "+lonLetter+","+Satellites+","+altitude+" "+altLetter
+        };
+        println("Blah");
+        println(csvData);
+        appendToFile(filePath, csvData);
+      }
     }
   }
   else
   {
     firstContact=false;
+    writeData=true;
   }
 }
 
